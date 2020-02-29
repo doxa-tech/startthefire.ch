@@ -483,9 +483,12 @@
 		});
 
 		const boxPadding = 300;
+		const maxRetry = 3;
+		const waitRetry = 100;
 		document.querySelectorAll('[data-fetch]').forEach((el) => {
-			const url = el.dataset.fetch
+			const url = el.dataset.fetch;
 			var loaded = false;
+			var retry = 0;
 			const checkLoad = function () {
 				var position = el.getBoundingClientRect();
 				// checking for partial visibility
@@ -493,9 +496,17 @@
 					fetch(url).then((resp) => {
 						return resp.json();
 					}).then((data) => {
-						el.innerHTML = data.data.content
+						el.innerHTML = data.data.content;
+						loaded = true;
+					}).catch((err) => {
+						retry++;
+						if (retry <= maxRetry) {
+							console.log("retry url=" + url + " retry=" + retry);
+							setTimeout(checkLoad, waitRetry);
+						} else {
+							el.innerHTML = "failed to load resource: " + err;
+						}
 					});
-					loaded = true;
 				}
 			}
 			checkLoad();
