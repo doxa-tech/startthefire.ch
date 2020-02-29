@@ -482,13 +482,14 @@
 			console.log("hi")
 		});
 
+		const boxPadding = 500;
 		document.querySelectorAll('[data-fetch]').forEach((el) => {
 			const url = el.dataset.fetch
 			var loaded = false;
 			const checkLoad = function () {
 				var position = el.getBoundingClientRect();
 				// checking for partial visibility
-				if (!loaded && position.top < window.innerHeight && position.bottom >= 0) {
+				if (!loaded && position.top < window.innerHeight + boxPadding && position.bottom >= -boxPadding) {
 					fetch(url).then((resp) => {
 						return resp.json();
 					}).then((data) => {
