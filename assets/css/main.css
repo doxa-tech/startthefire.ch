@@ -1,5 +1,6 @@
 @import url("fontawesome-all.min.css");
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,400,400italic");
+@import url("loadrr.css");
 
 /*
 	Tessellate by HTML5 UP
@@ -1966,37 +1967,37 @@ input, select, textarea {
 		width: 100%;
 	}
 
-		table.default {
+		table {
 			width: 100%;
 			border-collapse: collapse;
 		}
 
-			table.default tbody tr {
+			table tbody tr {
 				border: solid 1px #e6e6e6;
 			}
 
-				table.default tbody tr:nth-child(2n+2) {
+				table tbody tr:nth-child(2n+2) {
 					background: #f8f8f8;
 				}
 
-			table.default td {
+			table td {
 				padding: 0.5em 1em 0.5em 1em;
 			}
 
-			table.default th {
+			table th {
 				text-align: left;
 				padding: 0.5em 1em 1em 1em;
 			}
 
-			table.default tfoot td {
+			table tfoot td {
 				padding-top: 1em;
 			}
 
-	.dark table.default tbody tr {
+	.dark table tbody tr {
 		border-color: rgba(255, 255, 255, 0.5);
 	}
 
-		.dark table.default tbody tr:nth-child(2n+2) {
+		.dark table tbody tr:nth-child(2n+2) {
 			background: rgba(255, 255, 255, 0.1);
 		}
 
