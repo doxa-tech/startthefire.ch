@@ -482,58 +482,25 @@
 			console.log("hi")
 		});
 
-		function fetchUrl(el, url) {
-			console.log("go with " + url)
-			fetch(url).then((resp) => {
-				return resp.json();
-			}).then((data) => {
-				el.innerHTML = data.data.content;
-				loaded = true;
-			}).catch((err) => {
-				el.innerHTML = "failed to load resource: " + err;
-			});
-		}
-
 		const boxPadding = 300;
 		const maxRetry = 3;
-		const waitFetch = 50;
+		const waitFetch = 10;
 		document.querySelectorAll('[data-fetch]').forEach((el, id) => {
-			const url = el.dataset.fetch;
-			setTimeout(fetchUrl, waitFetch * id, el, url)
-			fetch(url).then((resp) => {
-				return resp.json();
-			}).then((data) => {
-				el.innerHTML = data.data.content;
-				loaded = true;
-			}).catch((err) => {
-				el.innerHTML = "failed to load resource: " + err;
-			});
-			// var loaded = false;
-			// var retry = 0;
-			// const checkLoad = function () {
-			// 	var position = el.getBoundingClientRect();
-			// 	// checking for partial visibility
-			// 	if (!loaded && position.top < window.innerHeight + boxPadding && position.bottom >= -boxPadding) {
-			// 		fetch(url).then((resp) => {
-			// 			return resp.json();
-			// 		}).then((data) => {
-			// 			el.innerHTML = data.data.content;
-			// 			loaded = true;
-			// 		}).catch((err) => {
-			// 			retry++;
-			// 			if (retry <= maxRetry) {
-			// 				console.log("retry url=" + url + " retry=" + retry);
-			// 				setTimeout(checkLoad, waitRetry);
-			// 			} else {
-			// 				el.innerHTML = "failed to load resource: " + err;
-			// 			}
-			// 		});
-			// 	}
-			// }
-			// checkLoad();
-			// window.addEventListener('scroll', () => {
-			// 	checkLoad();
-			// });
+			const url = el.dataset.fetch
+			const checkLoad = function () {
+				var position = el.getBoundingClientRect();
+				// checking for partial visibility
+				if (position.top < window.innerHeight + boxPadding && position.bottom >= -boxPadding) {
+					window.removeEventListener('scroll', checkLoad);
+					fetch(url).then((resp) => {
+						return resp.json();
+					}).then((data) => {
+						el.innerHTML = data.data.content
+					});
+				}
+			}
+			checkLoad();
+			window.addEventListener('scroll', checkLoad);
 		});
 
 	</script>
