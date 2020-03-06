@@ -16,7 +16,9 @@
 <body class="is-preload">
 
 	<!-- Header -->
-	<section id="header" class="dark">
+	<section id="header" class="dark first">
+		<div class="lang"><a href="?lang=fr">FR</a> | <a href="?lang=en">EN</a> | <a href="?lang=de">DE</a></div>
+
 		<header id="content-index" data-fetch="https://panda.bullenetwork.ch/directus/items/startthefire_pages/1">
 			<!-- <h1>Start the Fire</h1>
 			<p>Impacter nos régions par la puissance de Dieu</p> -->
@@ -478,9 +480,17 @@
 	<script src="assets/js/main.js"></script>
 
 	<script>
-		document.getElementById("send").addEventListener("click", (e) => {
-			console.log("hi")
-		});
+		const queryString = window.location.search;
+		const urlParams = new URLSearchParams(queryString);
+		var lang = urlParams.get("lang")
+		if (lang === null && (lang != "en" || lang != "de")) {
+			lang = "fr"
+		}
+
+		var contentField = "content"
+		if (lang !== "fr") {
+			contentField = contentField + "_" + lang
+		}
 
 		const boxPadding = 300;
 		const maxRetry = 3;
@@ -495,7 +505,7 @@
 					fetch(url).then((resp) => {
 						return resp.json();
 					}).then((data) => {
-						el.innerHTML = data.data.content
+						el.innerHTML = data.data[contentField]
 					});
 				}
 			}
